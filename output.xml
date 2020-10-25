@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.2 (Python 3.7.9 on win32)" generated="20201025 09:13:47.417" rpa="false">
+<suite id="s1" name="GetTest" source="D:\RobotRestApiAutomation\GetTest.robot">
+<test id="s1-t1" name="GetWoeid">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>getsession</arg>
+<arg>${baseurl}</arg>
+</arguments>
+<msg timestamp="20201025 09:13:47.606" level="INFO">Creating Session using : alias=getsession, url=https://www.metaweather.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20201025 09:13:47.606" endtime="20201025 09:13:47.606"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>getsession</arg>
+<arg>/api/location/search/?query=${city}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20201025 09:13:49.290" level="INFO">GET Request : url=https://www.metaweather.com/api/location/search/?query=london 
+ path_url=/api/location/search/?query=london 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201025 09:13:49.290" level="INFO">GET Response : url=https://www.metaweather.com/api/location/search/?query=london 
+ status=200, reason=OK 
+ body=[{"title":"London","location_type":"City","woeid":44418,"latt_long":"51.506321,-0.12714"}] 
+ </msg>
+<msg timestamp="20201025 09:13:49.290" level="INFO">c:\users\dell\appdata\local\programs\python\python37\lib\site-packages\urllib3\connectionpool.py:988: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.metaweather.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20201025 09:13:49.290" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201025 09:13:47.606" endtime="20201025 09:13:49.290"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.290" endtime="20201025 09:13:49.290"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.290" endtime="20201025 09:13:49.290"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.headers}</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.290" endtime="20201025 09:13:49.298"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${statuscode}</var>
+</assign>
+<msg timestamp="20201025 09:13:49.298" level="INFO">${statuscode} = 200</msg>
+<status status="PASS" starttime="20201025 09:13:49.298" endtime="20201025 09:13:49.298"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${statuscode}</arg>
+<arg>200</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.298" endtime="20201025 09:13:49.298"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${content}</var>
+</assign>
+<msg timestamp="20201025 09:13:49.298" level="INFO">${content} = [{"title":"London","location_type":"City","woeid":44418,"latt_long":"51.506321,-0.12714"}]</msg>
+<status status="PASS" starttime="20201025 09:13:49.298" endtime="20201025 09:13:49.298"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${content}</arg>
+<arg>London</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.298" endtime="20201025 09:13:49.298"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${content}</arg>
+<arg>44418</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.298" endtime="20201025 09:13:49.298"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${response.headers}</arg>
+<arg>Content-Type</arg>
+</arguments>
+<assign>
+<var>${TypeValue}</var>
+</assign>
+<msg timestamp="20201025 09:13:49.306" level="INFO">${TypeValue} = application/json</msg>
+<status status="PASS" starttime="20201025 09:13:49.298" endtime="20201025 09:13:49.306"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${TypeValue}</arg>
+<arg>application/json</arg>
+</arguments>
+<status status="PASS" starttime="20201025 09:13:49.306" endtime="20201025 09:13:49.306"></status>
+</kw>
+<status status="PASS" starttime="20201025 09:13:47.606" endtime="20201025 09:13:49.306" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20201025 09:13:47.417" endtime="20201025 09:13:49.306"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" id="s1" name="GetTest">GetTest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
